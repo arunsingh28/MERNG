@@ -12,8 +12,6 @@ module.exports = schema = buildSchema(`
     }
     
 
-
-
     type Event{
         _id: ID!
         title: String!
