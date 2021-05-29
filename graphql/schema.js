@@ -7,22 +7,37 @@ module.exports = schema = buildSchema(`
     }
 
     type Mutation{
-        createEvent(eventInput:EventInput): Event
+        createEvent(eventInput: EventInput): Event
+        createUser(userInput: UserInput): User
     }
-     
+    
+
+
+
     type Event{
         _id: ID!
-        title:String!
+        title: String!
         description: String
         price: Float!
         date: String!
     }
-
     input EventInput{
-        title:String!
+        title: String!
         description: String
         price: Float!
         date: String!
+    }
+ 
+
+
+    type User{
+        _id: ID!
+        email: String!
+        password: String
+    }
+    input UserInput{
+        email: String!,
+        password: String!
     }
 `)
 
