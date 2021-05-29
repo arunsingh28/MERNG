@@ -11,7 +11,6 @@ module.exports = schema = buildSchema(`
         createUser(userInput: UserInput): User
     }
     
-
     type Event{
         _id: ID!
         title: String!
