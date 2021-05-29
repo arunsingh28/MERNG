@@ -11,13 +11,25 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+const events = []
 
 // init graphQl
 app.use('/gql', graphqlHTTP({
     schema: Schema,
     rootValue: {
-        createEvent:(arg)=>{
-            return arg.name
+        events: () => {
+            return events
+        },
+        createEvent: (arg) => {
+            const event = {
+                _id: Math.random().toString(),
+                title: arg.eventInput.title,
+                description: arg.eventInput.description,
+                price: +arg.eventInput.price,
+                date: arg.eventInput.date
+            }
+            events.push(event)
+            return event
         }
     },
     graphiql: true
