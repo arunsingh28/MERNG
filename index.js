@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 
 const Schema = require('./graphql/schema')
-const { events,createEvent } = require('./graphql/resolver')
+const { events, createEvent, createUser } = require('./graphql/resolver')
 
 const app = express()
 
@@ -16,17 +16,17 @@ app.use(express.urlencoded({ extended: true }))
 // init graphQl
 app.use('/gql', graphqlHTTP({
     schema: Schema,
-    rootValue: { events,createEvent },
+    rootValue: { events, createEvent, createUser },
     graphiql: true
 }))
 
 // make connection to DB
-mongoose.connect(process.env.URI,{
-    useNewUrlParser:true,
+mongoose.connect(process.env.URI, {
+    useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(console.log('database is connected'))
-.catch(err => console.log(err))
+    .then(console.log('database is connected'))
+    .catch(err => console.log(err))
 
 const port = process.env.PORT || 2
 app.listen(port, console.log(`server runing on port:${port}`))
