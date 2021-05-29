@@ -7,7 +7,7 @@ module.exports = schema = buildSchema(`
     }
 
     type Mutation{
-        createEvent(eventInput:EventInput): String
+        createEvent(eventInput:EventInput): Event
     }
      
     type Event{
