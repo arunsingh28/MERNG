@@ -21,7 +21,6 @@ module.exports = {
         })
         return event.save()
             .then(result => {
-                
                 return { ...result._doc }
             })
             .catch(err => console.log(err))
