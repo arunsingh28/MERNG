@@ -1,18 +1,28 @@
 const { buildSchema } = require('graphql')
 
 
-module.exports = Schema = buildSchema(`
+module.exports = schema = buildSchema(`
     type Query{
-        
+        events: [Event!]!
     }
-
-    # mutaion 
 
     type Mutation{
-
+        createEvent(eventInput:EventInput): String
+    }
+     
+    type Event{
+        _id: ID!
+        title:String!
+        description: String
+        price: Float!
+        date: String!
     }
 
-
-    # custom type
-     
+    input EventInput{
+        title:String!
+        description: String
+        price: Float!
+        date: String!
+    }
 `)
+
