@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 
 const Schema = require('./graphql/schema')
-const { events, createEvent, createUser } = require('./graphql/resolver')
+const Resolver = require('./graphql/resolver')
 
 const app = express()
 
@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }))
 // init graphQl
 app.use('/gql', graphqlHTTP({
     schema: Schema,
-    rootValue: { events, createEvent, createUser },
+    rootValue: Resolver,
     graphiql: true
 }))
 
