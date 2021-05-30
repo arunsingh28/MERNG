@@ -1,6 +1,7 @@
 const express = require('express')
 const { graphqlHTTP } = require('express-graphql')
 const mongoose = require('mongoose')
+const cors = require('cors')
 require('dotenv').config()
 
 const Schema = require('./graphql/schema')
@@ -12,6 +13,7 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+app.use(cors())
 
 // init graphQl
 app.use('/gql', graphqlHTTP({

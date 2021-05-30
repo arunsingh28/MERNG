@@ -14,14 +14,14 @@ module.exports = schema = buildSchema(`
     type Event{
         _id: ID!
         title: String!
-        description: String
-        price: Float!
+        description: String!
+        price: String!
         date: String!
     }
     input EventInput{
         title: String!
-        description: String
-        price: Float!
+        description: String!
+        price: String!
         date: String!
     }
  
