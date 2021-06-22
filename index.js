@@ -1,54 +1,34 @@
-const { ApolloServer } = require('apollo-server')
-const gql = require('graphql-tag')
+const express = require('express')
+const { graphqlHTTP } = require('express-graphql')
 const mongoose = require('mongoose')
-
-
-// dotenv
-
+const cors = require('cors')
 require('dotenv').config()
-const Post = require('./Model/Post')
 
+const Schema = require('./graphql/schema')
+const Resolver = require('./graphql/resolver')
 
-const typeDefs = gql`
-    type Post{
-        id : ID!
-        body : String!
-        createdAt : String!
-        username : String!
-    }
-    type Query{
-        getPosts : [Post]
-    }
-`
+const app = express()
 
-const resolvers = {
-    Query: {
-       async getPosts(){
-            try {
-               const posts = await Post.find()
-               return posts 
-            } catch (error) {
-                throw new Error(error)
-            }
-        }
-    }
-}
+// body-praser
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
+app.use(cors())
 
-const server = new ApolloServer({
-    typeDefs,
-    resolvers
+// init graphQl
+app.use('/gql', graphqlHTTP({
+    schema: Schema,
+    rootValue: Resolver,
+    graphiql: true
+}))
+
+// make connection to DB
+mongoose.connect(process.env.URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
+    .then(console.log('database is connected'))
+    .catch(err => console.log(err))
 
-mongoose.connect(process.env.URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Database conected'))
-    .catch(e => console.log(e))
-
-
-
-const port = process.env.PORT || 5000
-
-server.listen({ port })
-    .then(res => {
-        console.log(`server runing at ${res.url}`)
-    })
+const port = process.env.PORT || 2
+app.listen(port, console.log(`server runing on port:${port}`))
